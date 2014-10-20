@@ -79,6 +79,9 @@
 
   )
 
+
+;; TODO: scrollbar
+;; https://processing.org/examples/scrollbar.htlm
 (q/defsketch examplex
   :title "*rhizome component*"
   :setup setup
