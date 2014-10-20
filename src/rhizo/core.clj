@@ -131,13 +131,6 @@
 (defn into-set-path-def [s] (re-seq   #"[^-\d).,\s]" s))
 (re-seq   #"[^-\d).,\s]" "M1465.01,-83.896C1457.99,-74.7204 1452.79,-63.3996 1459,-54 1465.4,-44.31 1475.09,-37.2936 1485.59,-32.2159")
 
-;; these lines show that we only have one M and one C in azondi arrow definition
-(->> (get-arrows simple-svg-parsed)
-     (map (fn [[a b _] ]  b))
-     (map into-set-path-def)
-;;     distinct
-     )
-(second (first (get-arrows simple-svg-parsed)))
 
 ;; moveto http://www.w3.org/TR/SVG/paths.html#PathDataMovetoCommands
 ;; follows absolute
@@ -146,10 +139,10 @@
     {:moveto (extract-point (str/replace moveto #"M" ""))
      :absolute (vec (extract-points absolute))}))
 
-(parse-path "M1465.01,-83.896C1457.99,-74.7204 1452.79,-63.3996 1459,-54 1465.4,-44.31 1475.09,-37.2936 1485.59,-32.2159")
+(def example-arrow (parse-path "M1465.01,-83.896C1457.99,-74.7204 1452.79,-63.3996 1459,-54 1465.4,-44.31 1475.09,-37.2936 1485.59,-32.2159"))
 
 
-
+(count (:absolute (parse-path "M335.105,-275.865C317.651,-254.884 294.306,-218.834 312,-192 385.653,-80.302 462.486,-113.453 593,-84 764.586,-45.2787 1308.14,-25.9638 1484.88,-20.593")))
 
 
 (defn get-arrows [parsed-svg]
@@ -158,6 +151,15 @@
           :path (parse-path d)
           :arrow (vec (extract-points points))})
        (map :content (find-all-g-tag parsed-svg :edge))))
+
+;; these lines show that we only have one M and one C in azondi arrow definition
+(->> (get-arrows simple-svg-parsed)
+     (map (fn [[a b _] ]  b))
+     (map into-set-path-def)
+;;     distinct
+     )
+(second (first (get-arrows simple-svg-parsed)))
+
 
 
 (-> (get-arrows simple-svg-parsed)
