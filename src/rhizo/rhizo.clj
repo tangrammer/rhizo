@@ -1,9 +1,9 @@
 (ns rhizo.rhizo
   (:require [quil.core :as q]
             [clojure.string :as str]
-               [clojure.pprint :refer (pprint)]
-            [rhizo.core :refer (get-nodes simple-svg-parsed example-arrow get-arrows parse-path)]))
-
+            [clojure.pprint :refer (pprint)]
+            [rhizo.core :refer (get-nodes   get-arrows parse-path)]
+            [rhizo.data-example :refer (simple-svg-parsed)]))
 
 (def nodes (get-nodes simple-svg-parsed))
 
